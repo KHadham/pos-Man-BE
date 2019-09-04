@@ -11,6 +11,7 @@ const port = process.env.PORT || 5000
 const categoryRoute = require('./src/routes/categoryRt')
 const itemRoute = require('./src/routes/itemRt')
 const historyRoute = require('./src/routes/historyRt')
+const userRoute = require('./src/routes/userRt')
 
 
 app.listen(port, () => {
@@ -25,10 +26,11 @@ app.use(xssFilter())
 app.use(logger('dev'))
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //router
 
 app.use('/category', categoryRoute)
 app.use('/item', itemRoute)
 app.use('/history', historyRoute)
+app.use('/user', userRoute)

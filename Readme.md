@@ -1,4 +1,4 @@
-# Library Rest API 
+# Pos-Man Rest API 
 #### Build with 
 <p align="center">
   <a href="https://nodejs.org/">
@@ -14,7 +14,7 @@
 - [Contributors](#contributors)
 
 ## Introduction
-  this is just a simple API for my [ `Library app`](https://github.com/kampretosjr/library-frontend) project
+  an API for my "Point of Sales" project
 
 ## Features
 * users can get book data 
