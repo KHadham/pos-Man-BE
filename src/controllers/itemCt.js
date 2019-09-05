@@ -42,11 +42,13 @@ CgetAllItem: (req, res) => {
     },
 ///////  POST item //////////////////////////////////////////////
     CpostItem: (req, res) => {
-
+console.log(req.body.id_category)
         const data = {
             id_category: req.body.id_category,
             item_name: req.body.item_name,
-            item_image: req.file.path
+            item_image: "http://localhost:5000/" + req.file.path,
+            price: req.body.price
+
         }
     
         itemModel.createItem(data)

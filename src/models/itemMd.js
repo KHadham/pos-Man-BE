@@ -4,7 +4,7 @@ module.exports = {
 ////////GET ALL note////////////////////////////
     getAllItem: () => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT item.* ,category.category_name FROM item INNER JOIN category ON item.id_category = category.id_category' , (err, result) => {
+            conn.query('SELECT item.* ,category.category_name FROM item INNER JOIN category ON item.id_category = category.id_category ORDER BY item.id_category ASC' , (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

@@ -94,7 +94,8 @@ logout : (req, res) => {
   login: (req, res) => {
     const email = req.body.email
     const password = req.body.password
-
+console.log('email', email)
+console.log('password', password)
     userModels.getByEmail(email)
       .then((result) => {
         const dataUser = result[0]

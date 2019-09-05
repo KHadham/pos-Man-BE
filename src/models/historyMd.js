@@ -4,7 +4,7 @@ module.exports = {
 ////////GET ALL note////////////////////////////
     getAllHistory: () => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM history' , (err, result) => {
+            conn.query('SELECT * FROM history INNER JOIN user ON history.id_kasir = user.id_user' , (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
