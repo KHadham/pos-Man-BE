@@ -1,7 +1,12 @@
 const itemModel = require('../models/itemMd')
 const miscHelpers = require('../helpers/miscHelpers')
 const jwt = require('jsonwebtoken')
-
+const cloudinary = require('cloudinary')
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key:    process.env.API_KEY_CLOUD,
+    api_secret: process.env.API_SECRET_KEY_CLOUD
+})
 module.exports = {
 ////// GET ALL Note ///////////////////////////////////////
 CgetAllItem: (req, res) => {
@@ -41,14 +46,23 @@ CgetAllItem: (req, res) => {
         })
     },
 ///////  POST item //////////////////////////////////////////////
-    CpostItem: (req, res) => {
-console.log(req.body.id_category)
+    CpostItem: async (req, res) => {
+        const path = req.file.path
+        let nama_gambar 
+        console.log('path', path)
+        const getUrl = async req => {
+            let dataImg
+            await cloudinary.uploader.upload(path, result => {
+                nama_gambar = result.public_id
+                dataImg = result.url
+                })
+            return dataImg
+        }
         const data = {
             id_category: req.body.id_category,
             item_name: req.body.item_name,
-            item_image: "https://posboy.herokuapp.com/" + req.file.path,
+            item_image: await getUrl(),
             price: req.body.price
-
         }
     
         itemModel.createItem(data)
