@@ -4,58 +4,59 @@ const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary')
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
-    api_key:    process.env.API_KEY_CLOUD,
+    api_key: process.env.API_KEY_CLOUD,
     api_secret: process.env.API_SECRET_KEY_CLOUD
 })
 module.exports = {
-////// GET ALL Note ///////////////////////////////////////
-CgetAllItem: (req, res) => {
-    itemModel.getAllItem()
-        .then((resultData) => {
-            miscHelpers.response(res, resultData)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+    ////// GET ALL Note ///////////////////////////////////////
+    CgetAllItem: (req, res) => {
+        itemModel.getAllItem()
+            .then((resultData) => {
+                miscHelpers.response(res, resultData)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     },
 
-/////// GET Note by Category  /////////////////////////////////////////////
+    /////// GET Note by Category  /////////////////////////////////////////////
     CgetItemByCategory: (req, res) => {
         const nama = req.params.namaKategori
 
         itemModel.getItemByCategory(nama)
-        .then((resultData) => {
-            const result = resultData
-            miscHelpers.response(res, result, 200)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((resultData) => {
+                const result = resultData
+                miscHelpers.response(res, result, 200)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     },
-/////// GET 1 Note /////////////////////////////////////////////
+    /////// GET 1 Note /////////////////////////////////////////////
     CgetByidItem: (req, res) => {
         const idnote = req.params.idItem
         console.log(req.params.idnote)
         itemModel.getByidNote(idnote)
-        .then((resultData) => {
-            const result = resultData
-            miscHelpers.response(res, result, 200)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((resultData) => {
+                const result = resultData
+                miscHelpers.response(res, result, 200)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     },
-///////  POST item //////////////////////////////////////////////
+    ///////  POST item //////////////////////////////////////////////
     CpostItem: async (req, res) => {
         const path = req.file.path
-        let nama_gambar 
-        console.log('path', path)
+        let nama_gambar
+        console.log('pathcook', path)
         const getUrl = async req => {
             let dataImg
             await cloudinary.uploader.upload(path, result => {
                 nama_gambar = result.public_id
                 dataImg = result.url
-                })
+            })
+            console.log('pathcook', dataImg)
             return dataImg
         }
         const data = {
@@ -64,16 +65,16 @@ CgetAllItem: (req, res) => {
             item_image: await getUrl(),
             price: req.body.price
         }
-    
+
         itemModel.createItem(data)
-        .then(()=> {
-            miscHelpers.response(res, data, 200)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then(() => {
+                miscHelpers.response(res, data, 200)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     },
-/////// EDIT / PATCH itemn //////////////////////////////////////////////
+    /////// EDIT / PATCH itemn //////////////////////////////////////////////
     CeditItem: (req, res) => {
         let idnya = req.params.idItem
 
@@ -82,28 +83,28 @@ CgetAllItem: (req, res) => {
             item_name: req.body.item_name,
             item_image: req.file.path
         }
-        
 
-        itemModel.editItem(data,idnya)
-                .then(() => {
-                    miscHelpers.response(res, data, 200)
+
+        itemModel.editItem(data, idnya)
+            .then(() => {
+                miscHelpers.response(res, data, 200)
             })
             .catch((error) => {
                 console.log(error)
             })
-        },
-//////// DELETE itemn /////////////////////////////////////////
+    },
+    //////// DELETE itemn /////////////////////////////////////////
 
-CeraseItem: (req, res) => {
-    let idnya = req.params.idItem
+    CeraseItem: (req, res) => {
+        let idnya = req.params.idItem
 
-    itemModel.deleteItem(idnya)
+        itemModel.deleteItem(idnya)
             .then(() => {
                 miscHelpers.response(res, idnya, 200)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     },
 
 }
