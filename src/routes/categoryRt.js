@@ -17,11 +17,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 Routes
-    .get    ('/',                   categoryController.CgetAllCategory)
-    .get    ('/:idCategory',        categoryController.CgetByidNote )
-    .post   ('/',                   upload.single('category_image'),categoryController.CpostCategory )
+
+    .get('/join', categoryController.categoryJoinItem)
+    .get('/', categoryController.CgetAllCategory)
+    .get('/:idCategory', categoryController.CgetByidNote)
+    .post('/', upload.single('category_image'), categoryController.CpostCategory)
     //.post   ('/',                   categoryController.CpostCategory )
-    .patch  ('/edit/:idCategory',   upload.single('category_image'),categoryController.CeditCategory)
-    .delete ('/delete/:idCategory', categoryController.CeraseCategory)
+    .patch('/edit/:idCategory', upload.single('category_image'), categoryController.CeditCategory)
+    .delete('/delete/:idCategory', categoryController.CeraseCategory)
 
 module.exports = Routes
